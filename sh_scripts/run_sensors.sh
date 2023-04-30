@@ -3,6 +3,9 @@ method=all
 hist_file="./res/sensors/_hist.txt"
 echo "$(date +"%T") run history" > $hist_file
 
+# 1. generate MCMC samples
+sensors_location.R
+
 CUDA_VISIBLE_DEVICES="" taskset -c 11-15 python3 experiment_sensor.py --METHOD=$method --RAM_SCALE=0.1 &
 CUDA_VISIBLE_DEVICES="" taskset -c 16-20 python3 experiment_sensor.py --METHOD=$method --RAM_SCALE=0.3 &
 CUDA_VISIBLE_DEVICES="" taskset -c 21-25 python3 experiment_sensor.py --METHOD=$method --RAM_SCALE=0.5 &

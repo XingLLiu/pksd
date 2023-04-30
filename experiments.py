@@ -6,7 +6,7 @@ tfd = tfp.distributions
 from tqdm import trange
 import argparse
 
-from src.ksd.ksd import KSD, MPKSD, SPKSD
+from src.ksd.ksd import KSD, OSPKSD, SPKSD
 from src.ksd.kernel import IMQ
 from src.ksd.bootstrap import Bootstrap
 import src.ksd.models as models
@@ -103,7 +103,7 @@ def run_bootstrap_experiment(
                 start_pts = sample_train # ntrain x dim
 
             # instantiate ospKSD class
-            ospksd = MPKSD(kernel=kernel, pert_kernel=MCMCKernel, log_prob=log_prob_fn)
+            ospksd = OSPKSD(kernel=kernel, pert_kernel=MCMCKernel, log_prob=log_prob_fn)
 
             # find modes and Hessians
             ospksd.find_modes(start_pts, **kwargs)

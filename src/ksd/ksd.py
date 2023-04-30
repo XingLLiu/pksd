@@ -14,6 +14,8 @@ class KSD:
     log_prob: callable=None
   ):
     """
+    Class for performing the KSD test.
+n
     Inputs:
         target (tfp.distributions.Distribution): Only require the log_probability of the target distribution e.g. unnormalised posterior distribution
         kernel (tf.nn.Module): [description]
@@ -63,20 +65,14 @@ class KSD:
     # term 1
     term1_mat = tf.linalg.matmul(score_X, score_Y, transpose_b=True) * K_XY # n x m
     # term 2
-    if dim <= 4000:
-      grad_K_Y = self.k.grad_second(X, Y) # n x m x dim
-      term2_mat = tf.expand_dims(score_X, -2) * grad_K_Y # n x m x dim
-      term2_mat = tf.reduce_sum(term2_mat, axis=-1)
-    else:  
-      term2_mat = self.k.grad_second_prod(X, Y, score_X)
+    grad_K_Y = self.k.grad_second(X, Y) # n x m x dim
+    term2_mat = tf.expand_dims(score_X, -2) * grad_K_Y # n x m x dim
+    term2_mat = tf.reduce_sum(term2_mat, axis=-1)
 
     # term3
-    if dim <= 4000:
-      grad_K_X = self.k.grad_first(X, Y) # n x m x dim
-      term3_mat = tf.expand_dims(score_Y, -3) * grad_K_X # n x m x dim
-      term3_mat = tf.reduce_sum(term3_mat, axis=-1)
-    else:
-      term3_mat = self.k.grad_first_prod(X, Y, score_Y)
+    grad_K_X = self.k.grad_first(X, Y) # n x m x dim
+    term3_mat = tf.expand_dims(score_Y, -3) * grad_K_X # n x m x dim
+    term3_mat = tf.reduce_sum(term3_mat, axis=-1)
 
     # term4
     term4_mat = self.k.gradgrad(X, Y) # n x m
@@ -171,6 +167,10 @@ class KSD:
 
 
 class PKSD(KSD):
+  """
+    Class for performing the pKSD test, as well as the base class for OSPKSD and SPKSD
+  """
+
   def __init__(self, 
     kernel: tf.Module, 
     pert_kernel: mcmc.RandomWalkMH,
@@ -288,7 +288,11 @@ class PKSD(KSD):
     return bootstrap.ksd_hat, p_val
 
 
-class MPKSD(PKSD):
+class OSPKSD(PKSD):
+  """
+    Class for performing the ospKSD test.
+  """
+
   def __init__(self, 
     kernel: tf.Module, 
     pert_kernel: mcmc.RandomWalkMH,
@@ -424,6 +428,10 @@ class MPKSD(PKSD):
 
 
 class SPKSD(PKSD):
+  """
+    Class for performing the spKSD test.
+  """
+
   def __init__(self, 
     kernel: tf.Module, 
     pert_kernel: mcmc.RandomWalkMH,

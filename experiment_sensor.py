@@ -1,7 +1,7 @@
 from src.ksd.find_modes import find_modes, pairwise_directions
 from src.ksd.langevin import RandomWalkMH, RandomWalkBarker
 import src.ksd.langevin as mcmc
-from src.ksd.ksd import KSD, MPKSD, SPKSD
+from src.ksd.ksd import KSD, OSPKSD, SPKSD
 from src.ksd.kernel import IMQ
 from src.ksd.bootstrap import Bootstrap
 from src.ksd.find_modes import find_modes, pairwise_directions
@@ -178,7 +178,7 @@ def experiment(T, n, target_dist):
             start_pts_comb = tf.concat([sample_train[:250], start_pts[:250]], axis=0) # ntrain x dim # TODO
 
             # instantiate ospKSD class
-            ospksd = MPKSD(kernel=kernel, pert_kernel=MCMCKernel, log_prob=log_prob_fn)
+            ospksd = OSPKSD(kernel=kernel, pert_kernel=MCMCKernel, log_prob=log_prob_fn)
 
             # find modes and Hessians
             tic = time.perf_counter()
