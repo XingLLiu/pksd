@@ -1,0 +1,27 @@
+# notebook checkpoints
+/.ipynb_checkpoints
+
+/src/__pycache__/*
+/src/*/__pycache__/*
+/*/__pycache__/*
+__pycache__/*
+/high_dim/.ipynb_checkpoints/
+
+# vscode
+/.vscode/
+/sh_scripts/pksd.code-workspace
+
+/build
+
+# # figs
+# /figs/*
+# /figs_code/*
+
+# egg-info
+*.egg-info/*
+
+# data
+mnist/
+
+# # results
+# /res/*

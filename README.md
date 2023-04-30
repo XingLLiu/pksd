@@ -26,6 +26,7 @@ Results will be stored in `res/bimodal`. Other experiments can be reproduced sim
 ├── src                           # Source files for pKSD and benchmarks
 ├── sh_scripts                    # Shell scripts to run experiments
 ├── res                           # Folder to store results
+├── figs                          # Folder to store figures
 ├── experiments.py                # Main script for generating results
 ├── example_gaussian_mix.ipynb    # Demonstration for how to use pKSD tests (spKSD and ospKSD)
 ├── setup.py                      # Setup file for easy-install of pKSD
