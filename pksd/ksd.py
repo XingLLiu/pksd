@@ -1,10 +1,9 @@
 import tensorflow as tf
 import tensorflow_probability as tfp
-from tqdm import trange
 
-from pksd.ksd.find_modes import find_modes, pairwise_directions
-import pksd.ksd.langevin as mcmc
-from pksd.ksd.bootstrap import Bootstrap
+from pksd.find_modes import find_modes, pairwise_directions
+import pksd.langevin as mcmc
+from pksd.bootstrap import Bootstrap
 
 class KSD:
   def __init__(

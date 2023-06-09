@@ -1,10 +1,10 @@
-from pksd.ksd.find_modes import find_modes, pairwise_directions
-from pksd.ksd.langevin import RandomWalkMH
-import pksd.ksd.langevin as mcmc
-from pksd.ksd.ksd import KSD, OSPKSD, SPKSD
-from pksd.ksd.kernel import IMQ
-from pksd.ksd.bootstrap import Bootstrap
-from pksd.ksd.find_modes import find_modes, pairwise_directions
+from pksd.find_modes import find_modes, pairwise_directions
+from pksd.langevin import RandomWalkMH
+import pksd.langevin as mcmc
+from pksd.ksd import KSD, OSPKSD, SPKSD
+from pksd.kernel import IMQ
+from pksd.bootstrap import Bootstrap
+from pksd.find_modes import find_modes, pairwise_directions
 from tqdm import trange
 from pksd.kgof.ksdagg import ksdagg_wild_test
 
