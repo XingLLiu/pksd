@@ -1,12 +1,12 @@
-from src.ksd.find_modes import find_modes, pairwise_directions
-from src.ksd.langevin import RandomWalkMH, RandomWalkBarker
-import src.ksd.langevin as mcmc
-from src.ksd.ksd import KSD, OSPKSD, SPKSD
-from src.ksd.kernel import IMQ
-from src.ksd.bootstrap import Bootstrap
-from src.ksd.find_modes import find_modes, pairwise_directions
-from tqdm import tqdm, trange
-from src.kgof.ksdagg import ksdagg_wild_test
+from pksd.ksd.find_modes import find_modes, pairwise_directions
+from pksd.ksd.langevin import RandomWalkMH
+import pksd.ksd.langevin as mcmc
+from pksd.ksd.ksd import KSD, OSPKSD, SPKSD
+from pksd.ksd.kernel import IMQ
+from pksd.ksd.bootstrap import Bootstrap
+from pksd.ksd.find_modes import find_modes, pairwise_directions
+from tqdm import trange
+from pksd.kgof.ksdagg import ksdagg_wild_test
 
 import pandas as pd
 import tensorflow as tf
@@ -16,14 +16,14 @@ import time
 import pickle
 import argparse
 
-from src.sensors import Sensor, SensorNumpy
+from pksd.sensors import Sensor, SensorNumpy
 
 import autograd.numpy as anp
 import kgof
 import kgof.density as kgof_density
 import kgof.goftest as kgof_gof
 
-MCMCKernel = RandomWalkMH # RandomWalkBarker 
+MCMCKernel = RandomWalkMH 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--RAM_SCALE", type=float)
@@ -119,7 +119,6 @@ def load_preprocess_sensors(path, n, ntrain):
 
 def experiment(T, n, target_dist):
     jump_ls = tf.linspace(0.8, 1.2, 51)
-    # jump_ls = tf.linspace(0.8, 1.2, 21)
 
     ntrain = n // 2
     threshold = 1e-4
@@ -136,10 +135,8 @@ def experiment(T, n, target_dist):
     bootstrap_nopert = Bootstrap(ksd, n)
 
     res = []
-    # iterator = tqdm(RAM_SCALE_LIST)
     iterator = trange(REP)
     res_samples = {s: {} for s in range(REP)}
-    # for ram_scale in iterator:
     for i in iterator:
         seed = i
         tf.random.set_seed(seed)
@@ -175,7 +172,7 @@ def experiment(T, n, target_dist):
 
             # start optim from randomly initialised points + training samples
             # start_pts_comb = tf.concat([sample_train[:(ntrain//2)], start_pts[:(ntrain//2)]], axis=0) # ntrain x dim
-            start_pts_comb = tf.concat([sample_train[:250], start_pts[:250]], axis=0) # ntrain x dim # TODO
+            start_pts_comb = tf.concat([sample_train[:250], start_pts[:250]], axis=0) # ntrain x dim
 
             # instantiate ospKSD class
             ospksd = OSPKSD(kernel=kernel, pert_kernel=MCMCKernel, log_prob=log_prob_fn)

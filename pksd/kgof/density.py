@@ -12,7 +12,7 @@ __author__ = 'wittawat'
 
 from abc import ABCMeta, abstractmethod
 import autograd
-import src.kgof.data as data
+import pksd.kgof.data as data
 import scipy.stats as stats
 #import warnings
 import logging

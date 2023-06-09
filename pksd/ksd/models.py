@@ -1,7 +1,7 @@
 import tensorflow as tf
 import tensorflow_probability as tfp
 tfd = tfp.distributions
-import src.kgof.density as density
+import pksd.kgof.density as density
 
 def check_log_prob(dist, log_prob):
   """Check if log_prob == dist.log_prob + const."""

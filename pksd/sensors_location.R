@@ -1,5 +1,5 @@
 ############################ 
-# Example 3: Sensor location problem
+# Example: Sensor location problem
 # adapted from Tak et al. 2016 https://www.tandfonline.com/doi/full/10.1080/10618600.2017.1415911
 ############################
 library("parallel")
@@ -328,186 +328,18 @@ MHwG.RAM <- function(initial.loc, initial.aux, jump.scale,
   
 }
 
-## run with different jump scales
-# set.seed(1)
-# j.list <- c(0.3, 0.7, 0.9, 1.3) # c(0.1, 0.5, 1.0, 1.08, 1.20) 
-
-# res <- mclapply(1 : length(j.list), function(k) {
-#   j.scale <- rep(j.list[k], ns)
-#   res.ram <- MHwG.RAM(runif(2*ns), runif(2*ns), jump.scale = j.scale, 
-#                                 Ob, Os, Xb, Xs, Yb, Ys, 
-#                                 n.sample = 400000, n.burn = 40000)
-  
-#   write.csv(res.ram$x, paste0(path, "_", j.list[k], ".csv"), row.names=FALSE)
-# }, mc.cores=length(j.list))
-
-
 ## run with different seeds for the same jump scale
 args = commandArgs(trailingOnly=TRUE)
 
 j.scale.val <- as.double(args[[1]])
-seed.list <- 1:10 # 1:20
+seed.list <- 1:10
 
 res <- mclapply(1 : length(seed.list), function(k) {
   set.seed(k)
   j.scale <- rep(j.scale.val, ns)
   res.ram <- MHwG.RAM(runif(2*ns), runif(2*ns), jump.scale = j.scale, 
                                 Ob, Os, Xb, Xs, Yb, Ys, 
-                                n.sample = 800000, n.burn = 80000)
+                                n.sample = 400000, n.burn = 40000)
   
-  write.csv(res.ram$x, paste0(path, j.scale.val, "/", "seed", k, "long.csv"), row.names=FALSE)
+  write.csv(res.ram$x, paste0(path, j.scale.val, "/", "seed", k, ".csv"), row.names=FALSE)
 }, mc.cores=length(seed.list))
-
-
-
-
-
-# j.scale <- rep(1.08, ns)
-
-# system.time(res.ram <- MHwG.RAM(runif(2*ns), runif(2*ns), jump.scale = j.scale, 
-#                                 Ob, Os, Xb, Xs, Yb, Ys, 
-#                                 n.sample = 100, n.burn = 100))
-# # The sample size used in the article is 
-# # "sample.size = 200000" and "burn.size = 20000".
-
-# write.csv(res.ram$x, path, row.names=FALSE)
-# # plot(1:nrow(res.ram$x), res.ram$x[,1])
-
-# system.time(res.ram.den <- MHwG.RAM(runif(8), runif(8), jump.scale = j.scale, 
-#                                     Ob, Os, Xb, Xs, Yb, Ys, 
-#                                     n.sample = 100, n.burn = 100))
-# The sample size used in the article is 
-# "sample.size = 20000000" and "burn.size = 20000".
-
-# ######## Metropolis
-
-# Metro.kernel <- function(current.location, loc.number, jump.scale) {
-  
-#   accept <- 0
-#   x.p <- current.location
-#   x.p[(2 * loc.number - 1) : (2 * loc.number)] <- x.p[(2 * loc.number - 1) : (2 * loc.number)] + 
-#     rnorm(2, 0, jump.scale)
-#   l.metro <- l.target(x.p, 0.3, 0.02, Ob, Os, Xb, Xs, Yb, Ys) - 
-#     l.target(current.location, 0.3, 0.02, Ob, Os, Xb, Xs, Yb, Ys)
-  
-#   if (l.metro >  -rexp(1)) {
-#     current.location <- x.p
-#     accept <- 1
-#   }
-#   c(current.location, accept)
-  
-# }
-
-# MHwG.Metro <- function(initial.loc, jump.scale, Ob, Os, Xb, Xs, Yb, Ys, n.sample = 10, n.burn = 10) {
-  
-#   print(Sys.time())
-#   n.total <- n.sample + n.burn
-#   accept <- matrix(0, nrow = n.total, ncol = 4)
-#   out <- matrix(NA, nrow = n.total, ncol = 8)
-#   loc.t <- initial.loc
-  
-#   for (i in 1 : n.total) {
-    
-#     for (j in 1 : 4) {
-#       TEMP <- Metro.kernel(loc.t, j, jump.scale[j])
-#       loc.t <- TEMP[1 : 8]
-#       accept[i, j] <- TEMP[9]
-#     }
-    
-#     out[i, ] <- loc.t
-    
-#   }
-  
-#   print(Sys.time())
-#   list(x = out[-c(1 : n.burn), ], accept = accept[-c(1 : n.burn), ])
-  
-# }
-
-# j.scale <- rep(1.08, 4)
-# system.time(res.mt <- MHwG.Metro(initial.loc = runif(8), jump.scale = j.scale, 
-#                                  Ob, Os, Xb, Xs, Yb, Ys, n.sample = 100, n.burn = 100))
-# # The sample size used in the article is 
-# # "sample.size = 1967150" and "burn.size = 20000".
-
-# system.time(res.mt.den <- MHwG.Metro(initial.loc = runif(8), jump.scale = j.scale, 
-#                                      Ob, Os, Xb, Xs, Yb, Ys, n.sample = 100, n.burn = 100))
-# # The sample size used in the article is 
-# # "sample.size = 20000000" and "burn.size = 20000".
-
-# ######## Tempered transitions
-
-# tt.kernel <- function(current.location, tempbase, nstep, loc.number, scale) {
-  
-#   temperature <- tempbase^(1 : nstep)
-#   j.scale <- scale
-  
-#   thresh.candi <- -rexp(nstep * 2)
-#   x.save <- matrix(NA, nrow = nstep * 2 + 1, ncol = 8)
-#   x.save[1, ] <- current.location
-#   tempupdown <- c(temperature[1 : nstep], temperature[nstep : 1])
-#   x.t <- current.location
-#   l.density.save <- rep(NA, nstep * 2 + 1)
-#   l.density.save[1] <- l.target(x.t, 0.3, 0.02, Ob, Os, Xb, Xs, Yb, Ys)
-  
-#   j.scale.serial <- c(j.scale * 1.2^{0 : (nstep - 1)}, j.scale * 1.2^{(nstep - 1) : 0})
-#   for (j in 1 : (2 * nstep)) {
-#     x.p <- x.t
-#     x.p[(2 * loc.number - 1) : (2 * loc.number)] <- 
-#       x.p[(2 * loc.number - 1) : (2 * loc.number)] + rnorm(2, mean = 0, sd = j.scale.serial[j])
-#     l.density.p <- l.target(x.p, 0.3, 0.02, Ob, Os, Xb, Xs, Yb, Ys)
-#     metro <- (l.density.p - l.density.save[j]) / tempupdown[j]
-#     if (metro > thresh.candi[j]) { 
-#       x.t <- x.p 
-#       l.density.save[j + 1] <- l.density.p
-#     } else {
-#       l.density.save[j + 1] <- l.density.save[j]
-#     }
-#     x.save[j + 1, ] <- x.t
-#   }
-  
-#   E <- -l.density.save
-  
-#   l.energy <- diff(1 / c(1, temperature)) %*% E[(2 * nstep + 1) : (nstep + 2)] -
-#     diff(1 / c(1, temperature)) %*% E[1 : nstep]  #LOG(exp(-(F_d-F_u)))
-  
-#   if (l.energy > -rexp(1)) { 
-#     current.location <- x.save[2 * nstep + 1, ] 
-#   }
-  
-#   c(current.location)
-  
-# }
-
-# MHwG.tt <- function(initial.loc, temp.base, n.step, jump.scale, 
-#                     Ob, Os, Xb, Xs, Yb, Ys, n.sample = 10, n.burn = 10) {
-  
-#   print(Sys.time())
-#   n.total <- n.sample + n.burn
-#   accept <- matrix(0, nrow = n.total, ncol = 4)
-#   out <- matrix(NA, nrow = n.total, ncol = 8)
-#   loc.t <- initial.loc
-  
-#   for (i in 1 : n.total) {
-#     for.accept <- loc.t
-#     for (j in 1 : 4) {
-#       TEMP <- tt.kernel(loc.t, temp.base, n.step, j, jump.scale)
-#       loc.t <- TEMP[1 : 8]
-#     }
-#     out[i, ] <- loc.t
-#     accept[i, ] <- 1 - (out[i, ] == for.accept)[seq(1, 7, by = 2)]
-#   }
-#   print(Sys.time())
-#   list(x = out[-c(1 : n.burn), ], accept = accept[-c(1 : n.burn), ])
-  
-# }
-
-# j.scale <- 0.9
-# system.time(res.tt <- MHwG.tt(runif(8), 2, 3, jump.scale = j.scale, 
-#                               Ob, Os, Xb, Xs, Yb, Ys, n.sample = 100, n.burn = 100))
-# # The sample size used in the article is 
-# # "sample.size = 311192" and "burn.size = 20000".
-
-# system.time(res.tt.den <- MHwG.tt(runif(8), 2, 3, jump.scale = j.scale, 
-#                                   Ob, Os, Xb, Xs, Yb, Ys, n.sample = 100, n.burn = 100))
-# # The sample size used in the article is 
-# # "sample.size = 311192" and "burn.size = 20000".

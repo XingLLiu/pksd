@@ -3,7 +3,7 @@ Functions for computing KSDAgg test for a collection of kernels
 using either a wild bootstrap or a parametic bootstrap.
 """
 
-from src.kgof.kernel import stein_kernel_matrices, compute_median_bandwidth, compute_ksd
+from pksd.kgof.kernel import stein_kernel_matrices, compute_median_bandwidth, compute_ksd
 import numpy as np
 import tensorflow as tf
 

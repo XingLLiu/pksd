@@ -17,7 +17,7 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(include=["src", "src.*"]),
+    packages=find_packages(include=["pksd", "pksd.*"]),
 
     # See https://www.python.org/dev/peps/pep-0440/#version-specifiers
     python_requires=">= 3.8",

@@ -6,13 +6,13 @@ tfd = tfp.distributions
 from tqdm import trange
 import argparse
 
-from src.ksd.ksd import KSD, OSPKSD, SPKSD
-from src.ksd.kernel import IMQ
-from src.ksd.bootstrap import Bootstrap
-import src.ksd.models as models
-import src.ksd.models_np as models_np
-import src.ksd.langevin as mcmc
-from src.kgof.ksdagg import ksdagg_wild_test
+from pksd.ksd.ksd import KSD, OSPKSD, SPKSD
+from pksd.ksd.kernel import IMQ
+from pksd.ksd.bootstrap import Bootstrap
+import pksd.ksd.models as models
+import pksd.ksd.models_np as models_np
+import pksd.ksd.langevin as mcmc
+from pksd.kgof.ksdagg import ksdagg_wild_test
 
 import autograd.numpy as anp
 import kgof
