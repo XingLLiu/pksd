@@ -1,18 +1,18 @@
 # Code for pKSD
 ## How to install?
 Before running any scripts, run the following to install the current package and the dependencies. Packages that this programme depends on are listed in `setup.py`. 
+1. Run the follwing to install the this repo as a package called `pksd`.
 ```bash
 pip install git+https://github.com/XingLLiu/pksd.git
 ```
-
-This programme **also** depends on the [kgof]() package for the implementation of the FSSD test ([Jitkrittum et al., 2017. An interpretable linear-time kernel goodness-of-fit test](http://papers.neurips.cc/paper/6630-a-linear-time-kernel-goodness-of-fit-test.pdf)), which can be installed by running
+2. Run the following to install the [kgof]() package for the implementation of the FSSD test ([Jitkrittum et al., 2017. An interpretable linear-time kernel goodness-of-fit test](http://papers.neurips.cc/paper/6630-a-linear-time-kernel-goodness-of-fit-test.pdf)), which is required by our package.
 ```bash
 pip install git+https://github.com/wittawatj/kernel-gof.git
 ```
-Code for KSDAgg ([Schrab et al., 2022. KSD Aggregated Goodness-of-fit Test](https://arxiv.org/abs/2202.00824)) is copied from this [Github repo](https://github.com/antoninschrab/ksdagg) and held in `pksd/kgof`.
+Code for KSDAgg ([Schrab et al., 2022. KSD Aggregated Goodness-of-fit Test](https://arxiv.org/abs/2202.00824)) is copied from this [Github repo](https://github.com/antoninschrab/ksdagg) and held in `pksd/kgof`, hence it does not require installation. This is to customise the output of their test so that results can be copmared with the other tests.
 
 ## Examples
-This package can then be loaded as a python module with
+This package can be loaded as a python module with
 ```python
 import pksd
 ```
