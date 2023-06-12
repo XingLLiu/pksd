@@ -35,6 +35,13 @@ setup(
         "jupyter",
         "sklearn",
         "tqdm",
-        "seaborn"
-    ]
+        "seaborn",
+        "future",
+        "autograd"
+    ],
+
+
+    # install kgof of Jitkirittum et al., 2017 An interpretable linear-time
+    # kernel goodness-of-fit test 
+    dependency_links = ["https://github.com/wittawatj/kernel-gof.git"]
 )
