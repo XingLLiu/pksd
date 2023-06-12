@@ -43,5 +43,5 @@ setup(
 
     # install kgof of Jitkirittum et al., 2017 An interpretable linear-time
     # kernel goodness-of-fit test 
-    install_requires = ["kgof @ git+ssh://git@github.com/wittawatj/kernel-gof.git#egg=kgof-0.1.0"]
+    dependency_links=["https://github.com/wittawatj/kernel-gof/tarball/master#egg=kgof-0.1.0"]
 )
