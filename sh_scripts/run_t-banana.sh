@@ -11,9 +11,9 @@ do
 done
 wait
 
-# echo "$(date +"%T") finished t_std" >> $hist_file
+echo "$(date +"%T") finished t_std" >> $hist_file
 
-### 2. dimensions
+## 2. dimensions
 # for dim in 2 5 10 15 20 25 30 35 40 45 50
 # do
 #   CUDA_VISIBLE_DEVICES="" taskset -c 0-10 python3 experiments.py --method=$method \

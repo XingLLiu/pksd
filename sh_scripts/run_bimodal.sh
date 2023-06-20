@@ -4,7 +4,7 @@ echo "$(date +"%T") run history" > $hist_file
 method=all
 
 ### 1. inter-modal distance
-for delta in 0. 0.1 1 2 3 4 5 6 7 8 9 10 11 12 # 13 14 15
+for delta in 0. 0.1 1 2 3 4 5 6 7 8 9 10 11 12
 do
     CUDA_VISIBLE_DEVICES="" taskset -c 0-10 python3 \
     experiments.py --model=bimodal --k=1 --dim=1 --T=10 --n=200 --ratio_t=0.5 --ratio_s=1. --delta=$delta \

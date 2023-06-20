@@ -1,5 +1,6 @@
 # Code for pKSD
 ## How to install?
+### Install as a package
 Before running any scripts, run the following to install the current package and the dependencies. Packages that this programme depends on are listed in `setup.py`. 
 1. Run the follwing to install the this repo as a package called `pksd`.
 ```bash
@@ -9,7 +10,13 @@ pip install git+https://github.com/XingLLiu/pksd.git
 ```bash
 pip install git+https://github.com/wittawatj/kernel-gof.git
 ```
-Code for KSDAgg ([Schrab et al., 2022. KSD Aggregated Goodness-of-fit Test](https://arxiv.org/abs/2202.00824)) is copied from this [Github repo](https://github.com/antoninschrab/ksdagg) and held in `pksd/kgof`, hence it does not require installation. This is to customise the output of their test so that results can be copmared with the other tests.
+Code for KSDAgg ([Schrab et al., 2022. KSD Aggregated Goodness-of-fit Test](https://arxiv.org/abs/2202.00824)) is copied from this [Github repo](https://github.com/antoninschrab/ksdagg) and held in `pksd/kgof`, and hence it does not require installation. This is to customise the output of their test so that results can be copmared with the other tests.
+
+### Install dependencies only
+Alternatively, to install only the dependencies but not as a package, run
+```bash
+pip install -r requirements.txt
+```
 
 ## Examples
 This package can be loaded as a python module with

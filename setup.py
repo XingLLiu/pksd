@@ -9,6 +9,12 @@ setup(
     # https://packaging.python.org/en/latest/single_source_version.html
     version="0.1.0",
 
+    # The project's main homepage.
+    url="https://github.com/XingLLiu/pksd",
+
+    # Author details
+    author="Xing Liu",
+
     # Choose your license
     license="MIT",
 
@@ -33,7 +39,7 @@ setup(
         "pandas",
         "matplotlib",
         "jupyter",
-        "sklearn",
+        "scikit-learn",
         "tqdm",
         "seaborn",
         "future",
