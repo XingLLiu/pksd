@@ -1,4 +1,6 @@
 # Code for pKSD
+[Paper](https://arxiv.org/abs/2304.14762) | [Poster](https://github.com/XingLLiu/pksd/blob/main/_asset/poster_summer_school.pdf)
+
 ## How to install?
 ### Install as a package
 Before running any scripts, run the following to install the current package and the dependencies. Packages that this programme depends on are listed in `setup.py`. 
@@ -46,4 +48,3 @@ Results will be stored in `res/bimodal`. Other experiments can be reproduced sim
 ├── setup.py                      # Setup file for easy-install of pKSD
 └── README.md
 ```
-
