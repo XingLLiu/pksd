@@ -8,7 +8,7 @@ Before running any scripts, run the following to install the current package and
 ```bash
 pip install git+https://github.com/XingLLiu/pksd.git
 ```
-2. Run the following to install the [kgof]() package for the implementation of the FSSD test ([Jitkrittum et al., 2017. An interpretable linear-time kernel goodness-of-fit test](http://papers.neurips.cc/paper/6630-a-linear-time-kernel-goodness-of-fit-test.pdf)), which is required by our package.
+2. Run the following to install the [kgof](https://github.com/wittawatj/kernel-gof/tree/master) package for the implementation of the FSSD test ([Jitkrittum et al., 2017. An interpretable linear-time kernel goodness-of-fit test](http://papers.neurips.cc/paper/6630-a-linear-time-kernel-goodness-of-fit-test.pdf)), which is required by our package.
 ```bash
 pip install git+https://github.com/wittawatj/kernel-gof.git
 ```
